@@ -21,7 +21,7 @@ function taskCard(task) {
   div.innerHTML = `
     <div class="row">
       <h3>${escapeHtml(task.title)}</h3>
-      <span class="badge">${task.status}</span>
+      <span class="badge">test ${task.status}</span>
     </div>
     <p>${task.description ? task.description : "<em>Pas de description</em>"}</p>
     <small>id=${task.id} • créé=${new Date(task.created_at).toLocaleString()}</small>
