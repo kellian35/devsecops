@@ -111,3 +111,11 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
     db.delete(task)
     db.commit()
     return None
+
+
+@app.delete(
+    "/tasks/testwithverylongverylongverylongverylongverylongverylongverylongverylongverylongverylongverylongverylongverylongveryl/{task_id}",
+    status_code=204,
+)
+def delete_task(task_id: int, db: Session = Depends(get_db)):
+    return None
