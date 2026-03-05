@@ -3,14 +3,21 @@ repos:
     rev: 26.1.0
     hooks:
       - id: black
+        files: ^backend/.*\.py$
 
   - repo: https://github.com/pycqa/flake8
     rev: 7.3.0
     hooks:
       - id: flake8
 
-  - repo: https://github.com/hadolint/hadolint-pre-commit
-    rev: v2.12.0
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.14.0
     hooks:
-      - id: hadolint
-        files: Dockerfile|backend/Dockerfile
+      - id: hadolint-docker
+        files: ^backend/Dockerfile
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.0
+    hooks:
+      - id: prettier
+        files: ^frontend/.*\.(js|html|css|mjs)$
