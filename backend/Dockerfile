@@ -1,27 +1,22 @@
-FROM golang:1.26.0-trixie AS build
+FROM python:3.12-slim
 
-RUN apt update && apt install -y git nodejs npm
+WORKDIR /app
 
-ARG PROMETHEUS_VERSION
 ARG HTTP_PROXY
 ARG HTTPS_PROXY
 
 ENV HTTP_PROXY="${HTTP_PROXY}"
 ENV HTTPS_PROXY="${HTTPS_PROXY}"
 
-RUN git clone https://github.com/prometheus/prometheus.git \
-  && cd prometheus \
-  && git checkout "${PROMETHEUS_VERSION}"
+# Copy dependency files first (for Docker cache)
+COPY requirements.txt .
 
-WORKDIR /go/prometheus
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN make build
+# Copy application code
+COPY app ./app
 
-#FROM alpine:3.23.3
-FROM scratch
+EXPOSE 8000
 
-COPY --from=build /go/prometheus/prometheus /prometheus
-COPY --from=build /go/prometheus/promtool /promtool
-
-ENTRYPOINT ["/prometheus"]
-CMD ["--help"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
