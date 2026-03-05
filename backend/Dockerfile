@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12.4-slim
 
 WORKDIR /app
 
@@ -12,8 +12,8 @@ ENV HTTPS_PROXY="${HTTPS_PROXY}"
 COPY requirements.txt .
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip install --upgrade pip \
+    && pip install --upgrade -r requirements.txt
 # Copy application code
 COPY app ./app
 
