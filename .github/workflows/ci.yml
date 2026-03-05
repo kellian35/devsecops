@@ -25,3 +25,25 @@ jobs:
 
       - name: Run pre-commit
         run: pre-commit run --all-files
+
+  docker-security:
+    runs-on: ubuntu-latest
+    needs: docker-build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image
+        run: |
+          docker build backend \
+            --build-arg PROMETHEUS_VERSION=v2.53.4 \
+            -t prometheus-demo:test
+
+      - name: Scan image
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: prometheus-demo:test
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
