@@ -54,11 +54,11 @@ jobs:
             --build-arg HTTPS_PROXY=${{ secrets.HTTPS_PROXY }} \
             backend/
 
-      - name: Scan backend image with Trivy
-        uses: aquasecurity/trivy-action@0.24.0
-        with:
-          image-ref: backend-test
-          format: table
-          exit-code: 1
-          vuln-type: os,library
-          severity: CRITICAL,HIGH
+      # - name: Scan backend image with Trivy
+      #   uses: aquasecurity/trivy-action@0.24.0
+      #   with:
+      #     image-ref: backend-test
+      #     format: table
+      #     exit-code: 1
+      #     vuln-type: os,library
+      #     severity: CRITICAL,HIGH

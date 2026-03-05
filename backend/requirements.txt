@@ -5,3 +5,4 @@ pydantic==2.10.3
 jinja2==2.10.1
 PyYAML==5.3.1
 pre-commit
+docker-compose
